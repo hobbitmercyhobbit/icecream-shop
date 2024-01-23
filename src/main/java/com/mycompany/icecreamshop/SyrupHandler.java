@@ -1,6 +1,6 @@
 package com.mycompany.icecreamshop;
 
-class ToppingHandler implements IceCreamHandler {
+class SyrupHandler implements IceCreamHandler {
 
     private IceCreamHandler next;
 
@@ -11,8 +11,8 @@ class ToppingHandler implements IceCreamHandler {
 
     @Override
     public void handleRequest(IceCream iceCream) {
-        if (iceCream.getToppings().isEmpty()) {
-            System.out.println("Select a topping.");
+        if (iceCream.getSyrups().isEmpty()) {
+            System.out.println("Select a syrup.");
         } else if (next != null) {
             next.handleRequest(iceCream);
         }

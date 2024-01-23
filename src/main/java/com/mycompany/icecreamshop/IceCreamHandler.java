@@ -4,5 +4,5 @@ interface IceCreamHandler {
 
     void handleRequest(IceCream iceCream);
 
-    void setNext(IceCreamHandler toppingHandler);
+    void setNext(IceCreamHandler iceCreamHandler);
 }

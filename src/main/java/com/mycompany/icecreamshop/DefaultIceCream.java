@@ -5,7 +5,7 @@ import java.util.List;
 
 class DefaultIceCream implements IceCream {
 
-    private String flavor;
+    private String flavour;
     private final List<String> toppings = new ArrayList<>();
     private final List<String> syrups = new ArrayList<>();
 
@@ -25,8 +25,8 @@ class DefaultIceCream implements IceCream {
     }
 
     @Override
-    public String getFlavor() {
-        return flavor;
+    public String getFlavour() {
+        return flavour;
     }
 
     @Override
@@ -35,8 +35,8 @@ class DefaultIceCream implements IceCream {
     }
 
     @Override
-    public void setFlavor(String flavor) {
-        this.flavor = flavor;
+    public void setFlavour(String flavour) {
+        this.flavour = flavour;
     }
 
     @Override

@@ -5,65 +5,54 @@ import java.util.Arrays;
 
 public class IceCreamShop {
     public static void main(String[] args) {
-        // Builder Pattern
-        
-        // Create basic ice cream with flavor and toppings
+
         IceCream basicIceCream = new DefaultIceCream();
-        basicIceCream.setFlavor("Chocolate");
-        basicIceCream.setToppings(Arrays.asList("Sprinkles", "Nuts"));
+        basicIceCream.setFlavour("Chocolate");
         basicIceCream.setToppings(Arrays.asList("Marshmallows", "Chocolate chips"));
-        System.out.println("Toppings set " + basicIceCream.getToppings());
+        basicIceCream.setSyrups(Arrays.asList("Sprinkles", "Mint Syrup"));
         
-        
-        
-        // Add items to the order
+        System.out.println("***");
+        System.out.println("Selected Flavour '" + basicIceCream.getFlavour() + "'");
+        System.out.println("Selected Toppings '" + basicIceCream.getToppings() + "'");
+        System.out.println("Selected Syrups '" + basicIceCream.getSyrups() + "'");
+        System.out.println("***");
+
+        // builder pattern
         OrderBuilder orderBuilder = new OrderBuilder();
         orderBuilder.addItem(basicIceCream);
-        
-        // Add customer observer with a specific name
-        OrderObserver customerOrderObserver = new CustomerOrderObserver("Mercy");
+
+        // observer pattern
+        OrderObserver customerOrderObserver = new CustomerOrderObserver("Karunai");
         orderBuilder.addObserver(customerOrderObserver);
 
-        // Set delivery address, customer mobile number, quantity, and delivery method
-        orderBuilder.setDeliveryAddress("Melsiripura, Kurunegala")
+        orderBuilder.setDeliveryAddress("Palaya Kadai, Colombo la than")
                 .setMobileNumber("0777123456")
                 .setQuantity(2)
-                .chooseDelivery("Home Delivery");
+                .chooseDelivery("Normal Delivery");
 
-        // Build the order
         Order order = orderBuilder.reviewOrder();
 
-        // Remove an item from the order
-        order.removeItem(basicIceCream);
-
-        // Display the total cost of the order
         double totalCost = order.calculateTotal();
-        System.out.println("Total Order Cost: $" + totalCost);
+        System.out.println("Order Total : Rs " + totalCost);
 
-        // Set the order status
-        order.setStatus("In Progress");
-
-        // Execute a command to place the order
+        order.setStatus("in-progress");
+        // command pattern
         Command placeOrderCommand = new PlaceOrderCommand(order);
         placeOrderCommand.execute();
 
-        // Execute a command to provide feedback
-        Command provideFeedbackCommand = new GiveFeedbackCommand("Excellent service!");
+        Command provideFeedbackCommand = new GiveFeedbackCommand("Nalla thunnen, nalaikkum varuven");
         provideFeedbackCommand.execute();
 
-        // Decorate the order with gift wrapping
+        // decorator pattern
         Order decoratedOrder = new GiftDecorator(order);
-        System.out.println("Decorated Order Description: " + decoratedOrder.getDescription());
         double decoratedTotalCost = decoratedOrder.calculateTotal();
-        System.out.println("Decorated Order Total Cost: $" + decoratedTotalCost);
+        System.out.println("Decorated Order Total : Rs " + decoratedTotalCost);
 
-        // Decorate the order with special packaging
         decoratedOrder = new SpecialPackagingDecorator(decoratedOrder);
-        System.out.println("Order with Special Packaging Description: " + decoratedOrder.getDescription());
         double specialPackagingTotalCost = decoratedOrder.calculateTotal();
-        System.out.println("Order with Special Packaging Total Cost: $" + specialPackagingTotalCost);
+        System.out.println("Order with Special Packaging Total : Rs " + specialPackagingTotalCost);
 
-        // Change the order state using the State pattern
+        // state pattern
         OrderState placedState = new PlacedState();
         placedState.processOrder(order);
 
@@ -75,76 +64,34 @@ public class IceCreamShop {
         OrderState deliveryState = new DeliveryDetailes();
         deliveryState.processOrder(order);
 
-        // Chain of Responsibility: Check the flavor and toppings
-        IceCreamHandler flavorHandler = new FlavorHandler();
+        // chain of responsibility pattern
+        IceCreamHandler flavourHandler = new FlavourHandler();
         IceCreamHandler toppingHandler = new ToppingHandler();
-        flavorHandler.setNext(toppingHandler);
+        IceCreamHandler syrupHandler = new SyrupHandler();
+        flavourHandler.setNext(toppingHandler);
+        toppingHandler.setNext(syrupHandler);
 
-        // Create an ice cream without flavor
-        IceCream iceCreamWithoutFlavor = new DefaultIceCream();
-        flavorHandler.handleRequest(iceCreamWithoutFlavor);
+        IceCream flavourlessIceCream = new DefaultIceCream();
+        flavourHandler.handleRequest(flavourlessIceCream);
 
-        // Create an ice cream without toppings
-        IceCream iceCreamWithoutToppings = new DefaultIceCream();
-        iceCreamWithoutToppings.setFlavor("Chocolate");
-        flavorHandler.handleRequest(iceCreamWithoutToppings);
+        IceCream toppinglessIceCream = new DefaultIceCream();
+        toppinglessIceCream.setFlavour("Vera Chocolate");
+        flavourHandler.handleRequest(toppinglessIceCream);
 
-        // Create an ice cream with both flavor and toppings
-        IceCream iceCreamWithFlavorAndToppings = new DefaultIceCream();
-        iceCreamWithFlavorAndToppings.setFlavor("Mango");
-        iceCreamWithFlavorAndToppings.setToppings(Arrays.asList("Choco chips", "Caramel"));
-        flavorHandler.handleRequest(iceCreamWithFlavorAndToppings);
-
-        // Strategy Pattern: Payment using Credit Card
+        // strategypPattern
         PaymentMethord creditCardPayment = new CardPayment();
         creditCardPayment.pay(totalCost);
 
-        // Strategy Pattern: Payment using Cash
-        PaymentMethord cashPayment = new CashPayment();
-        cashPayment.pay(decoratedTotalCost);
-
-        // Strategy Pattern: Loyalty Program
         LoyaltyProgram loyaltyProgram = new DefaultLoyaltyProgram();
         loyaltyProgram.earnPoints(totalCost);
         int loyaltyPoints = loyaltyProgram.getPoints();
-        System.out.println("Earned " + loyaltyPoints + " loyalty points.");
+        System.out.println("You go " + loyaltyPoints + " points.");
 
-        // Strategy Pattern: Redeem Loyalty Points
-        loyaltyProgram.redeemPoints(50);
+        loyaltyProgram.redeemPoints(13);
 
-        // Strategy Pattern: Seasonal Promotion
-        PromotionManager promotionManager = new PromotionManager();
-        double discountedAmount = promotionManager.applyPromotion(order);
-        System.out.println("Discounted Amount after Seasonal Promotion: $" + discountedAmount);
-
-        // Observer Pattern: Real-time order tracking
+        // observer pattern
         OrderTracker orderTracker = new OrderTracker();
         orderTracker.trackOrderStatus(order);
 
-        // Observer Pattern: Rating System
-        RatingSystem ratingSystem = new FeedbackSystem() {
-            @Override
-            public void rateOrder(Order order, int rating) {
-                super.rateOrder(order, rating);
-                System.out.println("Rated order with " + rating + " stars.");
-            }
-        };
-
-        // Rate the order using the Observer Pattern
-        ratingSystem.rateOrder(order, 4);
-        double averageRating = ratingSystem.getRating(order);
-        System.out.println("Average Rating for the Order: " + averageRating + " stars");
-
-        // Observer Pattern: Customer loyalty program update
-        if (loyaltyPoints > 100) {
-            System.out.println("Congratulations! You've achieved Gold status in our loyalty program.");
-        }
-
-        // Observer Pattern: Customer feedback and improvement notification
-        if (averageRating < 3) {
-            System.out.println("We appreciate your feedback. We'll work on improving our service.");
-        } else {
-            System.out.println("Thank you for your positive feedback. We're glad you enjoyed our service!");
-        }
     }
 }

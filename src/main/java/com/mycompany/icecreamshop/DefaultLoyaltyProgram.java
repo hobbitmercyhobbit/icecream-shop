@@ -18,6 +18,6 @@ class DefaultLoyaltyProgram implements LoyaltyProgram {
     @Override
     public void redeemPoints(int points) {
 
-        System.out.println("Redeeming " + points + " loyalty points.");
+        System.out.println("Redeeming " + points + " points.");
     }
 }

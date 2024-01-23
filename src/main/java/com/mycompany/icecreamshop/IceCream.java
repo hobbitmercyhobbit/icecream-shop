@@ -8,13 +8,13 @@ interface IceCream {
 
     double cost();
 
-    String getFlavor();
+    String getFlavour();
 
     List<String> getToppings();
     
     List<String> getSyrups();
 
-    void setFlavor(String flavor);
+    void setFlavour(String flavour);
 
     void setToppings(List<String> toppings);
 

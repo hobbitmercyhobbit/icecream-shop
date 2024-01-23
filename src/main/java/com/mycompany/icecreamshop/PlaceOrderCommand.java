@@ -11,6 +11,6 @@ class PlaceOrderCommand implements Command {
     @Override
     public void execute() {
         System.out.println("Placing order...");
-        order.setStatus("Placed");
+        order.setStatus("placed");
     }
 }

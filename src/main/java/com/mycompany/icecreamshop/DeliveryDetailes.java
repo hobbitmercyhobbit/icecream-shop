@@ -5,6 +5,6 @@ class DeliveryDetailes implements OrderState {
     @Override
     public void processOrder(Order order) {
         System.out.println("Your order is out for delivery.");
-        order.setStatus("Out for Delivery");
+        order.setStatus("out-for-delivery");
     }
 }

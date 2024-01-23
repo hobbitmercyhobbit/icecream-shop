@@ -28,7 +28,7 @@ class OrderBuilder {
 
     public OrderBuilder setQuantity(int quantity) {
         order.setQuantity(quantity);
-        System.out.println("Quantity set " + quantity);
+        System.out.println("Quantity : " + quantity);
         return this;
     }
 

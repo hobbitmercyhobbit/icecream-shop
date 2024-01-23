@@ -4,6 +4,6 @@ class CashPayment implements PaymentMethord {
 
     @Override
     public void pay(double amount) {
-        System.out.println("Paid Rs" + amount + " using cash.");
+        System.out.println("Paid Rs " + amount + " using cash.");
     }
 }

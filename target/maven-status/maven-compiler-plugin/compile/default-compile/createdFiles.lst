@@ -12,5 +12,5 @@ com\mycompany\icecreamshop\OrderObserver.class
 com\mycompany\icecreamshop\PlacedState.class
 com\mycompany\icecreamshop\IceCreamHandler.class
 com\mycompany\icecreamshop\ToppingHandler.class
-com\mycompany\icecreamshop\FlavorHandler.class
+com\mycompany\icecreamshop\FlavourHandler.class
 com\mycompany\icecreamshop\CustomerOrderObserver.class

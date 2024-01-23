@@ -1,6 +1,6 @@
 package com.mycompany.icecreamshop;
 
-class FlavorHandler implements IceCreamHandler {
+class FlavourHandler implements IceCreamHandler {
 
     private IceCreamHandler next;
 
@@ -11,8 +11,8 @@ class FlavorHandler implements IceCreamHandler {
 
     @Override
     public void handleRequest(IceCream iceCream) {
-        if (iceCream.getFlavor() == null) {
-            System.out.println("Select a flavor.");
+        if (iceCream.getFlavour() == null) {
+            System.out.println("Select a flavour.");
         } else if (next != null) {
             next.handleRequest(iceCream);
         }
